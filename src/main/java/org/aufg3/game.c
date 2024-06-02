@@ -8,7 +8,7 @@
 
 pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 pthread_cond_t cond = PTHREAD_COND_INITIALIZER;
-int table; // Das Spielobjekt auf dem virtuellen Tisch (0: Schere, 1: Stein, 2: Papier)
+int table = -1; // Das Spielobjekt auf dem virtuellen Tisch (-1: ungültig, 0: Schere, 1: Stein, 2: Papier)
 int player1_wins = 0, player2_wins = 0, draws = 0; // Zähler für die Spielergebnisse
 
 // Funktion, um eine zufällige Zahl zwischen 0 und 2 zu generieren
@@ -64,6 +64,16 @@ void *referee() {
     pthread_exit(NULL);
 }
 
+// Funktion zum Ausgeben der Spielregel-Matrix
+void print_rule_matrix() {
+    printf("\nSpielregel-Matrix:\n");
+    printf("|        | Schere | Stein | Papier |\n");
+    printf("| Schere |   o    |   -   |    +   |\n");
+    printf("| Stein  |   +    |   o   |    -   |\n");
+    printf("| Papier |   -    |   +   |    o   |\n");
+}
+
+
 int main() {
     pthread_t threads[3];
     srand(time(NULL));
@@ -86,6 +96,9 @@ int main() {
     printf("Anzahl Gewinne Spieler 1: %d\n", player1_wins);
     printf("Anzahl Gewinne Spieler 2: %d\n", player2_wins);
 
+    // Ausgabe der Spielregel-Matrix
+    print_rule_matrix();
+    
     pthread_mutex_destroy(&mutex);
     pthread_cond_destroy(&cond);
 
