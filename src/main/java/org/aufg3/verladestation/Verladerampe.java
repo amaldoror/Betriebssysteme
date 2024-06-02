@@ -7,7 +7,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Verladerampe {
     private final int id;
     private final AtomicInteger containerUmschlaege = new AtomicInteger(0);
-    final Semaphore semaphore = new Semaphore(1, true); // fairness enabled
+    final Semaphore semaphore = new Semaphore(1, true); // fairness enabled -> FIFO
 
     public Verladerampe(int id) {
         this.id = id;

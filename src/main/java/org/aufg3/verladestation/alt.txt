@@ -1,0 +1,27 @@
+
+    // alte Version
+    private Verladerampe findVerladerampe() {
+        Verladerampe selected = null;
+        int minQueueSize = Integer.MAX_VALUE;
+
+        for (Verladerampe rampe : verladerampen) {
+            int queueSize = rampe.semaphore.availablePermits() == 0 ? 1 : 0;
+            if (queueSize < minQueueSize) {
+                minQueueSize = queueSize;
+                selected = rampe;
+            }
+        }
+
+        List<Verladerampe> freieRampen = new ArrayList<>();
+        for (Verladerampe rampe : verladerampen) {
+            if (rampe.semaphore.availablePermits() > 0) {
+                freieRampen.add(rampe);
+            }
+        }
+
+        if (!freieRampen.isEmpty()) {
+            selected = freieRampen.get(RANDOM.nextInt(freieRampen.size()));
+        }
+
+        return selected;
+    }

@@ -1,6 +1,5 @@
 package org.aufg3.spiel;
 
-import java.util.Random;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
@@ -21,7 +20,7 @@ public class Table {
                 tableNotEmpty.await();
             }
             choice = playerChoice;
-            System.out.println(Thread.currentThread().getName() + " legt " + choiceToString(playerChoice) + " auf den Tisch.");
+            //System.out.println(Thread.currentThread().getName() + " legt " + choiceToString(playerChoice) + " auf den Tisch.");
             tableNotEmpty.signal(); // Weckt den Schiedsrichter auf
         } finally {
             lock.unlock();
@@ -55,8 +54,3 @@ public class Table {
         };
     }
 }
-
-
-
-
-

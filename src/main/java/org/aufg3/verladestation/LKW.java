@@ -20,7 +20,6 @@ public class LKW implements Runnable {
             Verladerampe rampe = findVerladerampe();
             if (rampe != null) {
                 rampe.umschlagen();
-
                 try {
                     Thread.sleep(ThreadLocalRandom.current().nextInt(5000, 10000));
                 } catch (InterruptedException e) {
@@ -34,18 +33,9 @@ public class LKW implements Runnable {
         running = false;
     }
 
-    private Verladerampe findVerladerampe() {
-        Verladerampe selected = null;
-        int minQueueSize = Integer.MAX_VALUE;
 
-        for (Verladerampe rampe : verladerampen) {
-            int queueSize = rampe.semaphore.availablePermits() == 0 ? 1 : 0;
-            if (queueSize < minQueueSize) {
-                minQueueSize = queueSize;
-                selected = rampe;
-            }
-        }
 
+    private synchronized Verladerampe findVerladerampe() {
         List<Verladerampe> freieRampen = new ArrayList<>();
         for (Verladerampe rampe : verladerampen) {
             if (rampe.semaphore.availablePermits() > 0) {
@@ -54,9 +44,9 @@ public class LKW implements Runnable {
         }
 
         if (!freieRampen.isEmpty()) {
-            selected = freieRampen.get(RANDOM.nextInt(freieRampen.size()));
+            return freieRampen.get(RANDOM.nextInt(freieRampen.size()));
         }
 
-        return selected;
+        return null;
     }
 }
