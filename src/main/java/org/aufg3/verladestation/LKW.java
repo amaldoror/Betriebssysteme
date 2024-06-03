@@ -14,6 +14,12 @@ public class LKW implements Runnable {
         this.verladerampen = verladerampen;
     }
 
+
+    /**
+     * Solange die running Flag auf true steht, führt der LKW folgende Tätigkeit durch: <br>
+     * Erst wird nach einer freien Verladerampe gesucht. Wenn es eine gibt, wird ein Container umgeschlagen. <br>
+     * Der LKW wartet, bis das Umschlagen des Containers durchgeführt wurde.
+     */
     @Override
     public void run() {
         while (running) {
@@ -29,12 +35,18 @@ public class LKW implements Runnable {
         }
     }
 
+    /**
+     * Setzt die running Flag auf false. Wird verwendet um LKW Threads zu beenden.
+     */
     public void stop() {
         running = false;
     }
 
 
-
+    /**
+     * Sucht nach einer verfügbaren Verladerampe.
+     * @return
+     */
     private synchronized Verladerampe findVerladerampe() {
         List<Verladerampe> freieRampen = new ArrayList<>();
         for (Verladerampe rampe : verladerampen) {
