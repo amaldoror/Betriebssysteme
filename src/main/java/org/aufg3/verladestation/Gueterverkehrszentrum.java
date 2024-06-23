@@ -21,7 +21,7 @@ public class Gueterverkehrszentrum {
 
         // Hinzufügen der LKWs
         List<LKW> lkws = new ArrayList<>();
-        for (int i = 0; i < ANZAHL_LKWS; i++) { // Erstellen von 10 LKWs
+        for (int i = 0; i < ANZAHL_LKWS; i++) {
             LKW lkw = new LKW(verladerampen);
             lkws.add(lkw);
             executorService.submit(lkw);
@@ -33,6 +33,7 @@ public class Gueterverkehrszentrum {
             e.printStackTrace();
         }
 
+        // LKW
         for (LKW lkw : lkws) {
             lkw.stop();
         }

@@ -14,14 +14,16 @@ public class Player extends Thread {
 
     @Override
     public void run() {
-        try {
-            for (int i = 0; i < Main.NUM_ROUNDS; i++) {
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
                 int choice = random.nextInt(3); // Zufällige Auswahl von 0 bis 2
                 table.putChoice(choice);
                 sleep(1000); // Simuliert Zeit für die Auswahl
+            } catch (InterruptedException e) {
+                //e.printStackTrace();
+                Thread.currentThread().interrupt();
             }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
+
     }
 }

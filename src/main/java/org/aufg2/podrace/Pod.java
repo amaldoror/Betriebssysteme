@@ -37,6 +37,7 @@ public class Pod implements Runnable {
             }
             timeTotal += timeRound;
         }
+
         synchronized (Pod.class) {
             times[podID] = timeTotal;
             isFinishedRound[podID] = true;
@@ -47,6 +48,7 @@ public class Pod implements Runnable {
                 }
             }
             positions[podID] = position;
+
             if (position == NUM_PODS) {
                 printResults();
             }

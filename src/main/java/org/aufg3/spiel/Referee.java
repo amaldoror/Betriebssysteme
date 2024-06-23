@@ -11,9 +11,9 @@ public class Referee extends Thread {
     }
 
     @Override
-    public void start() {
-        try {
-            for (int i = 0; i < Main.NUM_ROUNDS; i++) {
+    public void run() {
+        while (!Thread.currentThread().isInterrupted()) {
+            try {
                 int choice1 = table.takeChoice();
                 int choice2 = table.takeChoice();
 
@@ -32,17 +32,23 @@ public class Referee extends Thread {
                     System.out.println("Spieler 2 gewinnt.");
                     player2Wins++;
                 }
-            }
 
-            // Ausgabe der Gesamtauswertung
-            System.out.println("\nGesamtauswertung:");
-            System.out.println("Gesamtanzahl gespielter Runden: " + Main.NUM_ROUNDS);
-            System.out.println("Anzahl Unentschieden: " + draws);
-            System.out.println("Anzahl Gewinne Spieler 1: " + player1Wins);
-            System.out.println("Anzahl Gewinne Spieler 2: " + player2Wins);
-        } catch (InterruptedException e) {
-            System.err.println("Fehler beim starten der Spieler.");
-            //e.printStackTrace();
+
+            } catch (InterruptedException e) {
+                //System.err.println("Fehler beim starten der Spieler.");
+                //e.printStackTrace();
+                Thread.currentThread().interrupt();
+            }
         }
+    }
+
+    @Override
+    public String toString(){
+        // Ausgabe der Gesamtauswertung
+        return "\nGesamtauswertung:"+
+                "\nGesamtanzahl gespielter Runden: " + Main.NUM_ROUNDS +
+                "\nAnzahl Unentschieden: " + draws +
+                "\nAnzahl Gewinne Spieler 1: " + player1Wins +
+                "\nAnzahl Gewinne Spieler 2: " + player2Wins;
     }
 }

@@ -13,6 +13,7 @@ public class Accident implements Runnable {
             Pod.setAccidentOccurred(true);
         } catch (InterruptedException e) {
             e.printStackTrace();
+            Thread.currentThread().interrupt();
         }
     }
 }
