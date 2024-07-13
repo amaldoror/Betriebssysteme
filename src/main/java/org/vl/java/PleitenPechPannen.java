@@ -3,6 +3,13 @@ package org.vl.java;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * <p><b><u>PleitenPechPannen</u></b></p>
+ * Diese Klasse demonstriert unerwünschtes Verhalten beim gleichzeitigen Zugriff auf Objekte.<br>
+ * <p><b>Node</b></p>
+ * Innere statische Klasse für die einzelnen Objekte.
+ * <br>
+ */
 public class PleitenPechPannen {
     private static class Node {
         String name;
@@ -13,8 +20,8 @@ public class PleitenPechPannen {
         }
     }
 
-    private Node anker;
-    private AtomicInteger step = new AtomicInteger(0);
+    private final Node anker;
+    private final AtomicInteger step = new AtomicInteger(0);
 
     public PleitenPechPannen() {
         anker = new Node("Anker");
@@ -108,9 +115,9 @@ public class PleitenPechPannen {
 
     public static void main(String[] args) throws InterruptedException {
         PleitenPechPannen ppp = new PleitenPechPannen();
-        System.out.println("Ausgangszustand:");
+        System.out.println("\nAusgangszustand:");
         ppp.printListe();
-
+        System.out.println();
         ppp.demonstriereProblem();
     }
 }
